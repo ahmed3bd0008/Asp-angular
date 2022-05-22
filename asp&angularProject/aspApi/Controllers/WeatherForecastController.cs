@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,6 +37,30 @@ namespace TestApplication.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+        [HttpGet("GetFile")]
+        public  IActionResult GetFile(){
+            MemoryStream stream = new MemoryStream();
+            using(ExcelPackage excelPackage=new ExcelPackage(stream))
+            {
+                var workShop = excelPackage.Workbook.Worksheets.Add("User");
+                var workStyle = excelPackage.Workbook.Styles.CreateNamedStyle("CUSTOMSTYLE");
+                workStyle.Style.Font.UnderLine = true;
+                workStyle.Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.DashDot);
+                workShop.Cells["A1"].Value = "Ahmed";
+                using(var r= workShop.Cells["A1:C1"])
+                {
+                    r.Merge = true;
+                    r.Style.Font.Color.SetColor(color: System.Drawing.Color.Blue);
+                    r.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    r.Style.Fill.BackgroundColor.SetColor(color: Color.Red);
+
+                }
+                excelPackage.Save();
+
+            }
+                stream.Position = 0;
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "User.xlsx");
         }
     }
 }
