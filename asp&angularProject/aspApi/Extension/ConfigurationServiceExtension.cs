@@ -1,6 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Repository.Implementation;
 using Repository.Interface;
+using Services.Implementation;
+using Services.Interface;
 
 namespace TestApplication.Extension
 {
@@ -13,7 +15,7 @@ namespace TestApplication.Extension
         }
         public static void configurationServicesMethod(this IServiceCollection services)
         {
-
+            services.AddScoped(typeof(IWorldService), typeof(WorldService));
         }
     }
 }

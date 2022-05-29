@@ -8,7 +8,7 @@ namespace Repository.Implementation
     {
         private readonly AppDbContextTest _context;
         private GenericRepository<City> _cityRepo;
-        private GenericRepository<Countery> _counteryRepo;
+        private GenericRepository<CounteryDto> _counteryRepo;
         public GenericRepository<City> CityRepo
         {
             get
@@ -19,12 +19,12 @@ namespace Repository.Implementation
                 return _cityRepo;
             }
         }
-        public GenericRepository<Countery> CounteryRepo
+        public GenericRepository<CounteryDto> CounteryRepo
         {
             get
             {
                 if (_cityRepo == null)
-                    _counteryRepo = new GenericRepository<Countery>(_context);
+                    _counteryRepo = new GenericRepository<CounteryDto>(_context);
 
                 return _counteryRepo;
             }

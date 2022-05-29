@@ -59,7 +59,47 @@ namespace Repository.Implementation
 
         public void updateEntity(T entity)
         {
-           _entity.Update(entity);
+            _entity.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public async Task<List<T>> getEntityWithIncludeAsync(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
+        {
+            IQueryable<T> entity = _entity;
+            if (filter != null)
+                entity.Where(filter);
+            if(string.IsNullOrWhiteSpace(includeProperties))
+            {
+                foreach (var item in includeProperties.Split(new char[] { ','},StringSplitOptions.RemoveEmptyEntries))
+                {
+                    entity.Include(item);
+                }
+            }
+            if(orderBy==null)
+            {
+                orderBy(entity).ToList();
+            }
+            return await entity.ToListAsync();
+                
+        }
+
+        public List<T> getEntityWithInclude(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
+        {
+            IQueryable<T> entity = _entity;
+            if (filter != null)
+                entity.Where(filter);
+            if (string.IsNullOrWhiteSpace(includeProperties))
+            {
+                foreach (var item in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    entity.Include(item);
+                }
+            }
+            if (orderBy == null)
+            {
+                orderBy(entity).ToList();
+            }
+            return  entity.ToList();
         }
     }
 }
