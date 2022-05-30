@@ -10,6 +10,12 @@ namespace Services.Mapping
          {
             CreateMap<City, CityDto>().ReverseMap();
             CreateMap<CounteryDto, Countery>().ReverseMap();
+            CreateMap<GetCounteryDto, Countery>().ReverseMap();
+            CreateMap<City, GetCityDto>().ForMember(d=>d.getCounteryDto,o=>o.MapFrom(d=>d.Countery))
+
+           . ReverseMap();
+           
+            
         }
     }
 }

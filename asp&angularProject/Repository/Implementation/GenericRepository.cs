@@ -83,19 +83,25 @@ namespace Repository.Implementation
                 
         }
 
-        public List<T> getEntityWithInclude(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
+        public List<T> getEntityWithInclude(
+            Expression<Func<T, bool>> filter = null, 
+            Func<IQueryable<T>, 
+            IOrderedQueryable<T>> orderBy = null, 
+            string includeProperties = "")
+
         {
             IQueryable<T> entity = _entity;
             if (filter != null)
-                entity.Where(filter);
-            if (string.IsNullOrWhiteSpace(includeProperties))
             {
-                foreach (var item in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    entity.Include(item);
-                }
+                entity.Where(filter);
+            }              
+            if (!string.IsNullOrWhiteSpace(includeProperties))
+            {
+                
+                    entity.Include(navigationPropertyPath: includeProperties);
+                
             }
-            if (orderBy == null)
+            if (orderBy != null)
             {
                 orderBy(entity).ToList();
             }

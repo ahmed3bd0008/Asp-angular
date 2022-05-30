@@ -12,24 +12,23 @@ namespace aspApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CityController : ControllerBase
+    public class CounteryController : ControllerBase
     {
         private readonly IWorldService _worldService;
 
-        public CityController(IWorldService worldService)
+        public CounteryController(IWorldService worldService)
         {
             _worldService = worldService;
         }
         [HttpPost("CreateCity")]
-        public IActionResult CreateCity(CityDto cityDto) 
+        public IActionResult CreateCountery(CounteryDto counteryDto) 
         {
-            return Ok(_worldService.AddCity(cityDto));
+            return Ok(_worldService.AddCountery(counteryDto));
         }
         [HttpGet]
-        public IActionResult GetCity( )
+        public IActionResult GetCountery()
         {
-            return Ok(_worldService.GetCity());
+            return Ok(_worldService.GetCountery());
         }
-
     }
 }

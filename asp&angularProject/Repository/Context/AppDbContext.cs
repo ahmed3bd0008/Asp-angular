@@ -12,7 +12,7 @@ namespace Repository.Context
             
         }
         public DbSet<City>  Cities { get; set; }
-        public DbSet<CounteryDto>  Counteries { get; set; }
+        public DbSet<Countery>  Counteries { get; set; }
 
         protected  override void OnModelCreating(ModelBuilder modelBuilder)
     {

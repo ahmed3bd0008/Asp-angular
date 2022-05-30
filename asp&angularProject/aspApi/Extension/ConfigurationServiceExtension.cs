@@ -12,6 +12,8 @@ namespace TestApplication.Extension
         {
              services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
             services.AddScoped(typeof(IUntityOfWork),typeof(UntityOfWork));
+            services.AddScoped(typeof(ICityRepository),typeof(CityRepository));
+            
         }
         public static void configurationServicesMethod(this IServiceCollection services)
         {

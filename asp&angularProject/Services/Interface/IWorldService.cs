@@ -11,6 +11,8 @@ namespace Services.Interface
  public   interface IWorldService
     {
         public ServiceResponse<int> AddCity(CityDto cityDto);
+        public ServiceResponse<List<GetCityDto>> GetCity();
         public ServiceResponse<int> AddCountery(CounteryDto cityDto);
+        public ServiceResponse<List<GetCounteryDto>> GetCountery();
     }
 }

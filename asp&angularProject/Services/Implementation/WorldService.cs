@@ -16,22 +16,55 @@ namespace Services.Implementation
     {
         private readonly IUntityOfWork _untityOfWork;
         private readonly IMapper _mapper;
+        private readonly ICityRepository _cityRepository;
 
-        public WorldService(IUntityOfWork untityOfWork,IMapper mapper )
+        public WorldService(IUntityOfWork untityOfWork,IMapper mapper ,ICityRepository cityRepository)
         {
             _untityOfWork = untityOfWork;
             _mapper = mapper;
+            _cityRepository = cityRepository;
         }
         public ServiceResponse<int> AddCity(CityDto cityDto)
         {
             var city = _mapper.Map<City>(cityDto);
             _untityOfWork.CityRepo.AddEntity(city);
-            _untityOfWork.sa
+            int res= _untityOfWork.save();
+            if (res <= 0)
+                return new ServiceResponse<int>() { Status = false, Message = "No date save" };
+            return new ServiceResponse<int>() { Status = true, Date=res,Message="Data Save"};
+
+        }
+        public ServiceResponse<List<GetCityDto>> GetCity()
+        {
+            var Cities = _untityOfWork.CityRepo.getEntityWithInclude(includeProperties: nameof(Countery));
+            var cityDto = _mapper.Map<List<GetCityDto>>(Cities);
+            return new ServiceResponse<List<GetCityDto>>() { Date = cityDto, Message = "Date" };
+
         }
 
-        public ServiceResponse<int> AddCountery(CounteryDto cityDto)
+
+        public ServiceResponse<int> AddCountery(CounteryDto counteryDto)
         {
-            throw new NotImplementedException();
+            var Countery = _mapper.Map<Countery>(counteryDto);
+            _untityOfWork.CounteryRepo.AddEntity(Countery);
+            int res = _untityOfWork.save();
+            if (res <= 0)
+                return new ServiceResponse<int>() { Status = false, Message = "No date save" };
+            return new ServiceResponse<int>() { Status = true, Date = res, Message = "Data Save" };
+        }
+
+       
+        public ServiceResponse<List<GetCounteryDto>> GetCountery()
+        {
+            var Counteries = _untityOfWork.CounteryRepo.getEntityWithInclude(null, d => d.OrderBy(o => o.Name), "City");
+            var counteryDto = _mapper.Map<List<GetCounteryDto>>(Counteries);
+            return new ServiceResponse<List<GetCounteryDto>>() { Date = counteryDto, Message = "Date" };
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            _untityOfWork.Dispose();
+            
         }
     }
 }

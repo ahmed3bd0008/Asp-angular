@@ -2,13 +2,21 @@ using Entity.Core;
 using Entity.Core.world;
 using Repository.Context;
 using Repository.Interface;
+using System.Threading.Tasks;
+
 namespace Repository.Implementation
 {
     public class UntityOfWork : IUntityOfWork
     {
         private readonly AppDbContextTest _context;
         private GenericRepository<City> _cityRepo;
-        private GenericRepository<CounteryDto> _counteryRepo;
+        private GenericRepository<Countery> _counteryRepo;
+
+        public UntityOfWork(AppDbContextTest contextTest)
+        {
+            _context = contextTest;
+        }
+
         public GenericRepository<City> CityRepo
         {
             get
@@ -19,17 +27,31 @@ namespace Repository.Implementation
                 return _cityRepo;
             }
         }
-        public GenericRepository<CounteryDto> CounteryRepo
+        public GenericRepository<Countery> CounteryRepo
         {
             get
             {
                 if (_cityRepo == null)
-                    _counteryRepo = new GenericRepository<CounteryDto>(_context);
+                    _counteryRepo = new GenericRepository<Countery>(_context);
 
                 return _counteryRepo;
             }
         }
         public bool disposed { get; set; } = false;
+
+        
+       
+
+        public int save()
+        {
+          return  _context.SaveChanges();
+        }
+
+        public async Task< int> saveASync()
+        {
+            return await _context.SaveChangesAsync();
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -43,7 +65,8 @@ namespace Repository.Implementation
         }
         public void Dispose()
         {
-           
+            Dispose(true);
+            System.GC.SuppressFinalize(this);
         }
     }
 }
