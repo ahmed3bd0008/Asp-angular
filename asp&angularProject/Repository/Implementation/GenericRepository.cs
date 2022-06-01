@@ -63,18 +63,20 @@ namespace Repository.Implementation
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public async Task<List<T>> getEntityWithIncludeAsync(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
+        public async Task<List<T>> getEntityWithIncludeAsync(
+                                                    Expression<Func<T, bool>> filter = null, Func<IQueryable<T>,
+                                                    IOrderedQueryable<T>> orderBy = null,
+                                                    params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> entity = _entity;
             if (filter != null)
                 entity.Where(filter);
-            if(string.IsNullOrWhiteSpace(includeProperties))
-            {
-                foreach (var item in includeProperties.Split(new char[] { ','},StringSplitOptions.RemoveEmptyEntries))
+            
+                foreach (var item in includes)
                 {
                     entity.Include(item);
                 }
-            }
+            
             if(orderBy==null)
             {
                 orderBy(entity).ToList();
@@ -86,21 +88,20 @@ namespace Repository.Implementation
         public List<T> getEntityWithInclude(
             Expression<Func<T, bool>> filter = null, 
             Func<IQueryable<T>, 
-            IOrderedQueryable<T>> orderBy = null, 
-            string includeProperties = "")
+            IOrderedQueryable<T>> orderBy = null,
+            params Expression<Func<T, object>>[] includes)
 
         {
             IQueryable<T> entity = _entity;
             if (filter != null)
             {
                 entity.Where(filter);
-            }              
-            if (!string.IsNullOrWhiteSpace(includeProperties))
-            {
-                
-                    entity.Include(navigationPropertyPath: includeProperties);
-                
             }
+        
+                
+                entity = includes.Aggregate(entity,
+                 (current, include) => current.Include(include));
+           
             if (orderBy != null)
             {
                 orderBy(entity).ToList();

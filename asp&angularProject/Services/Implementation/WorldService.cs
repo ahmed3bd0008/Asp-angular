@@ -36,7 +36,7 @@ namespace Services.Implementation
         }
         public ServiceResponse<List<GetCityDto>> GetCity()
         {
-            var Cities = _untityOfWork.CityRepo.getEntityWithInclude(includeProperties: nameof(Countery));
+            var Cities = _untityOfWork.CityRepo.getEntityWithInclude(filter:null,orderBy:null,x=>x.Countery);
             var cityDto = _mapper.Map<List<GetCityDto>>(Cities);
             return new ServiceResponse<List<GetCityDto>>() { Date = cityDto, Message = "Date" };
 
@@ -56,7 +56,7 @@ namespace Services.Implementation
        
         public ServiceResponse<List<GetCounteryDto>> GetCountery()
         {
-            var Counteries = _untityOfWork.CounteryRepo.getEntityWithInclude(null, d => d.OrderBy(o => o.Name), "City");
+          var Counteries = _untityOfWork.CounteryRepo.getEntityWithInclude(null, d => d.OrderBy(o => o.Name), x=>x.Cities);
             var counteryDto = _mapper.Map<List<GetCounteryDto>>(Counteries);
             return new ServiceResponse<List<GetCounteryDto>>() { Date = counteryDto, Message = "Date" };
         }

@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using Services.Mapping;
 using System;
 using System.Collections.Generic;
@@ -36,8 +37,10 @@ namespace TestApplication
             services.configurationRepositoryMethod();
             services.configurationServicesMethod();
             services.AddAutoMapper(typeof(AppProfileConfiguration));
-
-           services.ConnectedSql(Configuration);
+            ////////
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+            ///////////
+            services.ConnectedSql(Configuration);
             //Authenication 
             services.AddAuthentication();
             services.ConfigurationIdentity();
