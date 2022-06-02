@@ -30,6 +30,12 @@ namespace aspApi.Controllers
         {
             return Ok(_worldService.GetCity());
         }
+        [HttpGet]
+        [Route("GetCityWithInclude")]
+        public async  Task<IActionResult> GetCityAsync()
+        {
+            return Ok(await _worldService.GetCityAsync());
+        }
 
     }
 }

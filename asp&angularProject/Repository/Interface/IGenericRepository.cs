@@ -14,7 +14,7 @@ namespace Repository.Interface
         List<T> getEntity (bool track);
         Task< List<T>> getEntityAsync (bool track);
         Task< List<T>> getEntityAsync (Expression<Func<T,bool>> expression,bool track);
-        Task< List<T>> getEntityWithIncludeAsync (Expression<Func<T,bool>> filter = null, Func<IQueryable<T>,IOrderedQueryable<T>> orderBy = null, params Expression<Func<T, object>>[] includes);
+        Task< List<T>> getEntityWithIncludeAsync (string includes ,Expression<Func<T,bool>> filter = null, Func<IQueryable<T>,IOrderedQueryable<T>> orderBy = null);
          List<T> getEntityWithInclude( Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, params Expression<Func<T, object>>[] includes);
 
         List<T> getEntity (Expression<Func<T,bool>> expression,bool track);

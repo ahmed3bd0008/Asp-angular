@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Http;
 using TestApplication.Extension;
 
 namespace TestApplication
@@ -29,7 +30,14 @@ namespace TestApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+           //
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore).
+                                               // set this option to TRUE to indent the JSON output
+                                               // set this option to NULL to use PascalCase instead of
+                                               // camelCase (default)
+                                               // options.JsonSerializerOptions.PropertyNamingPolicy =
+                                               // null;
+                                               AddJsonOptions(option=>option.JsonSerializerOptions.WriteIndented=true);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TestApplication", Version = "v1" });
@@ -38,12 +46,13 @@ namespace TestApplication
             services.configurationServicesMethod();
             services.AddAutoMapper(typeof(AppProfileConfiguration));
             ////////
-            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             ///////////
             services.ConnectedSql(Configuration);
             //Authenication 
             services.AddAuthentication();
             services.ConfigurationIdentity();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

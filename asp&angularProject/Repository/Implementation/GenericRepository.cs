@@ -63,21 +63,25 @@ namespace Repository.Implementation
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public async Task<List<T>> getEntityWithIncludeAsync(
-                                                    Expression<Func<T, bool>> filter = null, Func<IQueryable<T>,
-                                                    IOrderedQueryable<T>> orderBy = null,
-                                                    params Expression<Func<T, object>>[] includes)
+        public async Task<List<T>> getEntityWithIncludeAsync(string includes,
+                                                    Expression<Func<T, bool>> filter = null,
+                                                    Func<IQueryable<T>,
+                                                    IOrderedQueryable<T>> orderBy = null
+                                                     )
         {
             IQueryable<T> entity = _entity;
             if (filter != null)
+            {
                 entity.Where(filter);
+            }
+            foreach (var item in includes.Split(new char[] {','},StringSplitOptions.RemoveEmptyEntries))
+            {
+                entity = entity.Include(item).AsQueryable();
+            }
+
+           
             
-                foreach (var item in includes)
-                {
-                    entity.Include(item);
-                }
-            
-            if(orderBy==null)
+            if(orderBy!=null)
             {
                 orderBy(entity).ToList();
             }

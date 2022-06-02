@@ -37,11 +37,20 @@ namespace Services.Implementation
         public ServiceResponse<List<GetCityDto>> GetCity()
         {
             var Cities = _untityOfWork.CityRepo.getEntityWithInclude(filter:null,orderBy:null,x=>x.Countery);
+            var Citiees = _cityRepository.cities();
             var cityDto = _mapper.Map<List<GetCityDto>>(Cities);
-            return new ServiceResponse<List<GetCityDto>>() { Date = cityDto, Message = "Date" };
+            return new ServiceResponse<List<GetCityDto>>() { Status = true, Date = cityDto, Message = "Date" };
 
         }
+        public async Task<ServiceResponse<List<GetCityDto>>> GetCityAsync()
+        {
+            //var Cities = _untityOfWork.CityRepo.getEntityWithInclude(filter: null, orderBy: null, x => x.Countery);
+            var Cities = await _untityOfWork.CityRepo.getEntityWithIncludeAsync("Countery", filter: null, orderBy: null);
+          // var Citiees = _cityRepository.cities();
+            var cityDto = _mapper.Map<List<GetCityDto>>(Cities);
+            return new ServiceResponse<List<GetCityDto>>() {Status=true,  Date = cityDto, Message = "Date" };
 
+        }
 
         public ServiceResponse<int> AddCountery(CounteryDto counteryDto)
         {

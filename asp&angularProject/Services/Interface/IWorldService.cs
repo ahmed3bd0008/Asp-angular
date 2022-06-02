@@ -12,6 +12,7 @@ namespace Services.Interface
     {
         public ServiceResponse<int> AddCity(CityDto cityDto);
         public ServiceResponse<List<GetCityDto>> GetCity();
+        public Task<ServiceResponse<List<GetCityDto>>> GetCityAsync();
         public ServiceResponse<int> AddCountery(CounteryDto cityDto);
         public ServiceResponse<List<GetCounteryDto>> GetCountery();
     }

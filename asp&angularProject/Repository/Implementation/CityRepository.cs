@@ -19,7 +19,8 @@ namespace Repository.Implementation
         }
         public List<City> cities()
         {
-            return _context.Cities.Include(d => d.Countery).ToList();
+            var xx= _context.Cities.Include(d => d.Countery);
+            return xx.ToList();
         }
     }
 }
