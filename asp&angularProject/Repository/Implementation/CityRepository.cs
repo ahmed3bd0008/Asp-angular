@@ -1,4 +1,5 @@
 ﻿using Entity.Core.world;
+using Entity.Paging;
 using Microsoft.EntityFrameworkCore;
 using Repository.Context;
 using Repository.Interface;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Implementation
 {
-   public class CityRepository :GenericRepository<City>, ICityRepository
+   public class CityRepository : GenericPagedRepository<City>, ICityRepository
     {
        private readonly AppDbContextTest _context;
         public CityRepository(AppDbContextTest context) :base(context)
@@ -22,5 +23,7 @@ namespace Repository.Implementation
             var xx= _context.Cities.Include(d => d.Countery);
             return xx.ToList();
         }
+
+        
     }
 }

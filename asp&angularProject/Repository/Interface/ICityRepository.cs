@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Interface
 {
- public   interface ICityRepository:IGenericRepository<City>
+ public   interface ICityRepository 
     {
         public List<City> cities();
     }

@@ -8,7 +8,7 @@ namespace Repository.Interface
 {
     public interface IUntityOfWork:IDisposable
     {
-        public GenericRepository<City> CityRepo{ get; }
+        public GenericPagedRepository<City> CityRepo{ get; }
         public GenericRepository<Countery> CounteryRepo{ get; }
         public int save();
         public Task< int> saveASync();

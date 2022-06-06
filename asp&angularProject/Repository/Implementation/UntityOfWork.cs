@@ -9,7 +9,7 @@ namespace Repository.Implementation
     public class UntityOfWork : IUntityOfWork
     {
         private readonly AppDbContextTest _context;
-        private GenericRepository<City> _cityRepo;
+        private GenericPagedRepository<City> _cityRepo;
         private GenericRepository<Countery> _counteryRepo;
 
         public UntityOfWork(AppDbContextTest contextTest)
@@ -17,12 +17,12 @@ namespace Repository.Implementation
             _context = contextTest;
         }
 
-        public GenericRepository<City> CityRepo
+        public GenericPagedRepository<City> CityRepo
         {
             get
             {
                 if (_cityRepo == null)
-                    _cityRepo = new GenericRepository<City>(_context);
+                    _cityRepo = new GenericPagedRepository<City>(_context);
 
                 return _cityRepo;
             }

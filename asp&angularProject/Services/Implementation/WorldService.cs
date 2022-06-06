@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Entity.Core.world;
 using Entity.Dto.worldDTO;
+using Entity.Paging;
 using Repository.Interface;
 using Services.Interface;
 using Services.Response;
@@ -52,6 +53,18 @@ namespace Services.Implementation
 
         }
 
+        public ServiceResponse<PageList<GetCityDto>> GetCityPaging(int pageSize, int PageIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task< ServiceResponse<PageList<GetCityDto>>> GetCityPagingAsync(int pageSize, int PageIndex)
+        {
+            var c =await _untityOfWork.CityRepo.GetPagedListAsync(PageIndex, pageSize);
+            var cities = _mapper.Map<List<GetCityDto>>(c.Date);
+            return new ServiceResponse<PageList<GetCityDto>>() { Date = new PageList<GetCityDto>(cities, c.ItemCount, c.PageIndex, c.PageSize) };
+        }
+
         public ServiceResponse<int> AddCountery(CounteryDto counteryDto)
         {
             var Countery = _mapper.Map<Countery>(counteryDto);
@@ -75,5 +88,7 @@ namespace Services.Implementation
             _untityOfWork.Dispose();
             
         }
+
+      
     }
 }
