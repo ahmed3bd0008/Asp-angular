@@ -4,8 +4,10 @@ import { CounteryComponent } from './countery/countery.component';
 
 const routes: Routes = [
 
-  {path:'city',component:CityComponent },
-  {path:'countery',component:CounteryComponent },
-];
 
+  {path:'city',component:CityComponent},
+  {path:'countery',component:CounteryComponent}
+
+
+];
 export const WorldRoutes = RouterModule.forChild(routes);
