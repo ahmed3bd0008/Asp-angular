@@ -66,7 +66,7 @@ namespace TestApplication
             }
      
             app.UseHttpsRedirection();
-
+            app.UseCors(option => option.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

@@ -39,7 +39,7 @@ namespace Services.Implementation
             var Cities = _untityOfWork.CityRepo.getEntityWithInclude(filter:null,orderBy:null,x=>x.Countery);
             var Citiees = _cityRepository.cities();
             var cityDto = _mapper.Map<List<GetCityDto>>(Cities);
-            return new ServiceResponse<List<GetCityDto>>() { Status = true, Date = cityDto, Message = "Date" };
+            return new ServiceResponse<List<GetCityDto>>() { Status = false, Date = cityDto, Message = "Date" };
 
         }
         public async Task<ServiceResponse<List<GetCityDto>>> GetCityAsync()
