@@ -30,9 +30,11 @@ class="table-striped mat-elevation-z8"
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 <mat-paginator
-[pageSize]="1"
+(page)="getcity($event)"
+
 [pageSizeOptions]="[1,2,3,4,5]"
 showFirstLastButtons
+pagel
 >
 
 </mat-paginator>

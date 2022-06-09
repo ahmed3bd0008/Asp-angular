@@ -37,9 +37,9 @@ namespace aspApi.Controllers
             return Ok(await _worldService.GetCityAsync());
         }
         [HttpGet]
-        [Route("GetCityPaging/{pageSize?}/{pageIndex?}")]
-        public async Task<IActionResult> GetCityPagingAsync(int pageSize, int pageIndex)
-        {
+        [Route("GetCityPaging")]
+        public async Task<IActionResult> GetCityPagingAsync( int pageSize, int pageIndex)
+        { 
             return Ok(await _worldService.GetCityPagingAsync(pageSize, pageIndex));
         }
 

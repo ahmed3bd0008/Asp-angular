@@ -21,7 +21,7 @@ namespace Entity.Paging
         public bool HasPrevious { 
             get
             {
-                return (PageIndex>1);
+                return (PageIndex>0);
             }
              }
         public bool HasNext {
@@ -38,14 +38,14 @@ namespace Entity.Paging
 
         public static PageList<T> ToPageList(IQueryable<T> sourse,int PageIndex,int pageSize)
         {
-            var date = sourse.Skip((PageIndex-1)*pageSize).Take(pageSize).ToList();
+            var date = sourse.Skip((PageIndex)*pageSize).Take(pageSize).ToList();
             var count = sourse.Count();
             return new PageList<T>(sourse: date, count: count, PageIndex: PageIndex, PageSize: pageSize);
         
         }
         public static async Task< PageList<T> >ToPageListAsync(IQueryable<T> sourse, int PageIndex, int pageSize)
         {
-            var date =await sourse.Skip((PageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
+            var date =await sourse.Skip((PageIndex ) * pageSize).Take(pageSize).ToListAsync();
             var count =await sourse.CountAsync();
             return new PageList<T>(sourse: date, count: count, PageIndex: PageIndex, PageSize: pageSize);
 

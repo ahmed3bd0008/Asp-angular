@@ -22,27 +22,41 @@ public displayedColumns: string[] = ['id', 'name', 'lat', 'lon'];
   }
 
   ngOnInit() {
-    this.pagEventp.pageIndex=1
+    this.pagEventp.pageIndex=0
     this.pagEventp.pageSize=1
     this.getcity(this.pagEventp);
    }
    getcity(event:PageEvent){
-     let url:string=this.api+'api/GetCityPaging';
+     let url:string=this.api+'api/City/GetCityPaging';
+
     let parms:HttpParams=new HttpParams();
-    parms.set("pageSize",event.pageSize);
-    parms.set("pageIndex",event.pageIndex)
-    this.httpclient.get<any>(url,{params:parms}).subscribe(
+    this.pagEventp.pageIndex=0
+
+    console.log(event)
+    this.httpclient.get<any>(url,{params:{
+      pageSize:event.pageSize.toString(),
+      pageIndex:event.pageIndex.toString()
+
+    }}).subscribe(
      (res:any)=>{
-        console.log(res)
-        console.log(res.status)
+
         if(!res.status){
-          console.log(typeof(res.date))
+
+          console.log( event.pageSize.toString()),
+          console.log( event.pageIndex.toString())
           this.paginator.length=res.date.itemCount
+
           this.paginator.pageIndex=res.date.pageIndex
           this.paginator.pageSize=res.date.pageSize
-        this.cities= new MatTableDataSource<City>(res.date.data as City[]) ;
+          this.paginator._intl.itemsPerPageLabel="hkghk"
+          //this.paginator.hasNextPage=res.date.hasNext
+        // this.paginator.hasPreviousPage=res.date.hasPrevious
+          console.log( res.date.itemCount)
+          console.log( res.date)
+
+        this.cities= new MatTableDataSource<City>(res.date.date as City[]) ;
        // this.cities.paginator=this.paginator;
-        console.log(res.date)
+
         }else{
           console.log("error")
         }
