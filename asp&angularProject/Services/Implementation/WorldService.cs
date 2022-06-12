@@ -3,6 +3,7 @@ using Entity.Core.world;
 using Entity.Dto.worldDTO;
 using Entity.Paging;
 using Repository.Interface;
+using Repository.Interface.Extension;
 using Services.Interface;
 using Services.Response;
 using System;
@@ -78,7 +79,7 @@ namespace Services.Implementation
        
         public ServiceResponse<List<GetCounteryDto>> GetCountery()
         {
-          var Counteries = _untityOfWork.CounteryRepo.getEntityWithInclude(null, d => d.OrderBy(o => o.Name), x=>x.Cities);
+          var Counteries = _untityOfWork.CounteryRepo.getEntityWithInclude(null, d => d.OrderBy(o => o.Name), x=>x.Cities).EntityOrder("Name dsc,isO2 desc");
             var counteryDto = _mapper.Map<List<GetCounteryDto>>(Counteries);
             return new ServiceResponse<List<GetCounteryDto>>() { Date = counteryDto, Message = "Date" };
         }
