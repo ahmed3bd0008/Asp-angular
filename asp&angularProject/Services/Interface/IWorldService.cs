@@ -15,6 +15,7 @@ namespace Services.Interface
         public ServiceResponse<List<GetCityDto>> GetCity();
         public ServiceResponse<PageList<GetCityDto>> GetCityPaging(int pageSize,int  PageIndex);
         public Task< ServiceResponse<PageList<GetCityDto>> >GetCityPagingAsync(int pageSize, int PageIndex);
+        public  Task<ServiceResponse<PageList<CityDto>>> GetCityPagingOrderByAsync(cityRequestPrameters cityRequestPrameters);
         public Task<ServiceResponse<List<GetCityDto>>> GetCityAsync();
         public ServiceResponse<int> AddCountery(CounteryDto cityDto);
         public ServiceResponse<List<GetCounteryDto>> GetCountery();

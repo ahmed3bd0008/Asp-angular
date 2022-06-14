@@ -58,6 +58,13 @@ namespace Services.Implementation
         {
             throw new NotImplementedException();
         }
+        public async Task<ServiceResponse<PageList<CityDto>>> GetCityPagingOrderByAsync(cityRequestPrameters cityRequestPrameters)
+        {
+            var cities = _untityOfWork.CityRepo.getEntity(true).EntityOrder(cityRequestPrameters.OrderString);
+            var cityPaging =  PageList<City>.ToPageList(cities.AsQueryable(), cityRequestPrameters.pageIndex, cityRequestPrameters.pageSize);
+            var citiesDto = _mapper.Map<List<CityDto>>(cityPaging.Date);
+            return new ServiceResponse<PageList<CityDto>>() { Date = new PageList<CityDto>(citiesDto, cityPaging.ItemCount, cityPaging.PageIndex, cityPaging.PageSize) };
+        }
 
         public async Task< ServiceResponse<PageList<GetCityDto>>> GetCityPagingAsync(int pageSize, int PageIndex)
         {
@@ -90,6 +97,6 @@ namespace Services.Implementation
             
         }
 
-      
+     
     }
 }

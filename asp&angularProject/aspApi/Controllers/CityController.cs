@@ -1,4 +1,5 @@
 ﻿using Entity.Dto.worldDTO;
+using Entity.Paging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Repository.Interface;
@@ -42,6 +43,11 @@ namespace aspApi.Controllers
         { 
             return Ok(await _worldService.GetCityPagingAsync(pageSize, pageIndex));
         }
-
+        [HttpGet]
+        [Route("GetCityPagingOrderBy")]
+        public async Task<IActionResult> GetCityPagingOrderByAsync([FromQuery] cityRequestPrameters cityRequestPrameters)
+        {
+            return Ok(await _worldService.GetCityPagingOrderByAsync(cityRequestPrameters));
+        }
     }
 }
