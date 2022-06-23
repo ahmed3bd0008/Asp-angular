@@ -4,6 +4,7 @@ import{ HttpClient ,HttpParams}from'@angular/common/http';
 import { City } from './City';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator,PageEvent } from '@angular/material/paginator';
+import { MatSort, Sort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-City',
@@ -15,8 +16,11 @@ export class CityComponent implements OnInit {
 private api:string=environment.apiUrl;
 public cities !: MatTableDataSource<City>;
 @ViewChild (MatPaginator)paginator !:MatPaginator
+@ViewChild (MatSort)sort !:MatSort
 pagEventp=new PageEvent();
 public displayedColumns: string[] = ['id', 'name', 'lat', 'lon'];
+public sortColumns: string = "name";
+public defaultSortOrder: string = "asc";
   constructor(private httpclient:HttpClient){
 
   }
@@ -24,8 +28,13 @@ public displayedColumns: string[] = ['id', 'name', 'lat', 'lon'];
   ngOnInit() {
     this.pagEventp.pageIndex=0
     this.pagEventp.pageSize=1
-    this.getcity(this.pagEventp);
+    this.loadData()
    }
+
+loadData(){
+
+  this.getcity(this.pagEventp);
+}
    getcity(event:PageEvent){
      let url:string=this.api+'api/City/GetCityPaging';
 
