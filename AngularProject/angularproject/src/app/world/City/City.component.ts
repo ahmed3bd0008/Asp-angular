@@ -27,7 +27,7 @@ public defaultSortOrder: string = "asc";
 
   ngOnInit() {
     this.pagEventp.pageIndex=0
-    this.pagEventp.pageSize=1
+    this.pagEventp.pageSize=5
     this.loadData()
    }
 
@@ -38,7 +38,6 @@ loadData(){
    getcity(event:PageEvent){
      let url:string=this.api+'api/City/GetCityPaging';
 
-    let parms:HttpParams=new HttpParams();
     this.pagEventp.pageIndex=0
 
     console.log(event)
