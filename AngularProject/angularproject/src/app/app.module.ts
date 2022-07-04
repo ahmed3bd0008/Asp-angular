@@ -10,7 +10,7 @@ import{HttpClient, HttpClientModule}from'@angular/common/http';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
-  declarations: [	
+  declarations: [
     AppComponent,
       NavbarComponent
    ],
@@ -20,7 +20,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+  
 
   ],
   providers: [

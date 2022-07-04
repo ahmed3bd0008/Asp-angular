@@ -8,6 +8,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { WorldRoutes } from './world.routing';
 import { CounteryComponent } from './countery/countery.component';
 import { AngularmaterialModule } from '../Shared/angularmaterial.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { AngularmaterialModule } from '../Shared/angularmaterial.module';
     HttpClientModule,
     AppRoutingModule,
     WorldRoutes,
-    AngularmaterialModule
+    AngularmaterialModule,
+
 
   ],
   exports:[
